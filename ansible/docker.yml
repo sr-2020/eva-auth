@@ -1,5 +1,0 @@
-- hosts: server
-  user: root
-
-  roles:
-    - { role: geerlingguy.docker, tags: docker }

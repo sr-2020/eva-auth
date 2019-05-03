@@ -1,5 +1,0 @@
----
-- name: Lumen deploy on all hosts.
-  hosts: all
-  roles:
-    - {role: gurkalov.lumen_deploy}

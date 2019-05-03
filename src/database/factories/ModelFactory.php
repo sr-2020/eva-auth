@@ -17,46 +17,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'admin' => false,
         'email' => $faker->email,
         'password' => $faker->password,
-        'status' => $faker->safeColorName,
-        'location_id' => null,
-        'location_updated_at' => null
-    ];
-});
-
-$factory->define(App\Path::class, function (Faker\Generator $faker) {
-    return [
-        'user_id' => 1,
-        'location_id' => 0,
-    ];
-});
-
-$factory->define(App\Beacon::class, function (Faker\Generator $faker) {
-    return [
-        'label' => $faker->streetName,
-        'ssid' => $faker->slug,
-        'bssid' => $faker->macAddress,
-    ];
-});
-
-$factory->define(App\Location::class, function (Faker\Generator $faker) {
-    return [
-        'label' => $faker->streetName,
-    ];
-});
-
-$factory->define(App\Position::class, function (Faker\Generator $faker) {
-    return [
-        'beacons' => [
-            [
-                'ssid' => $faker->slug,
-                'bssid' => $faker->macAddress,
-                'level' => -($faker->randomDigit % 100)
-            ],
-            [
-                'ssid' => $faker->slug,
-                'bssid' => $faker->macAddress,
-                'level' => -($faker->randomDigit % 100)
-            ],
-        ],
+        'status' => $faker->safeColorName
     ];
 });

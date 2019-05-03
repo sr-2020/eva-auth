@@ -11,8 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('LocationsSeeder');
-        $this->call('BeaconsSeeder');
         $this->call('UsersSeeder');
     }
 }

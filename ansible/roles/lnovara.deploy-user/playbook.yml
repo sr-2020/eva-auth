@@ -1,7 +1,0 @@
----
-
-- name: Create deploy user on all hosts.
-  hosts: all
-  roles:
-    - { role: lnovara.deploy-user,
-        user_groups: [foo, bar] }

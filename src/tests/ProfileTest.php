@@ -36,7 +36,7 @@ class ProfileTest extends TestCase
             'Authorization' => $user->api_key
         ])
             ->seeStatusCode(JsonResponse::HTTP_OK)
-            ->seeJsonEquals($user->toArray()+ ['location' => null]);
+            ->seeJsonEquals($user->toArray());
     }
 
     /**
@@ -53,7 +53,7 @@ class ProfileTest extends TestCase
             'Authorization' => 'Bearer ' . $user->api_key
         ])
             ->seeStatusCode(JsonResponse::HTTP_OK)
-            ->seeJsonEquals($user->toArray() + ['location' => null]);
+            ->seeJsonEquals($user->toArray());
     }
 
     /**

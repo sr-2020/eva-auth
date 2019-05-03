@@ -1,8 +1,0 @@
-[server]
-172.37.0.77
-
-[storage]
-172.37.0.77
-
-[localhost]
-127.0.0.1 ansible_connection=local

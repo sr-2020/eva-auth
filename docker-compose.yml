@@ -1,43 +1,31 @@
-version: "3.3"
+version: "3.6"
 
 services:
-
   app:
     image: ${IMAGE_APP}
-    working_dir: /var/www
+    ports:
+      - ${APP_PORT}:80
     volumes:
-      - eva-platform-src:/var/www
+      - .env:/var/www/html/.env
     environment:
-      DB_HOST: ${DB_HOST}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_DATABASE: ${DB_DATABASE}
-      DB_PASSWORD: ${DB_PASSWORD}
+      SKIP_COMPOSER: 1
+      SKIP_CHOWN: 1
     links:
       - database
 
-  nginx:
-    image: ${IMAGE_NGINX}
-    working_dir: /var/www
-    volumes:
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./docker/nginx/app.conf:/etc/nginx/conf.d/default.conf
-      - eva-platform-src:/var/www
-    ports:
-      - ${APP_PORT}:80
-    links:
-      - app
-
   database:
-    image: ${IMAGE_MYSQL}
+    image: ${IMAGE_DATABASE}
     volumes:
       - eva-platform-db:/var/lib/mysql
-      - ./docker/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+      - ./docker/mysql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
 
+  redis:
+    image: ${IMAGE_REDIS}
+
 volumes:
   eva-platform-db:
-  eva-platform-src:

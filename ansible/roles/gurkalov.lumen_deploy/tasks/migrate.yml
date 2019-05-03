@@ -1,6 +1,0 @@
----
-- name: Run migration
-  command: php {{ app_directory }}/current/artisan migrate
-  when: app_db
-  tags:
-  - migration

@@ -1,8 +1,0 @@
----
-- name: Install the php packages (APT)
-  apt:
-    name: "{{ php_fpm_service }}"
-    state: present
-    update_cache: true
-  notify:
-    - restart php-fpm

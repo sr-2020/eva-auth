@@ -6,7 +6,7 @@ suites:
         modules:
             enabled:
                 - REST:
-                    url: http://position.evarun.loc:5070/api/v1
+                    url: http://localhost:5101/api/v1
                     depends: PhpBrowser
 
     local:
@@ -27,22 +27,13 @@ suites:
                       url: http://94.103.85.103/api/v1
                       depends: PhpBrowser
 
-    mirror:
-        actor: ApiTester
-        path: .
-        modules:
-            enabled:
-                - REST:
-                      url: http://84.201.132.246/api/v1
-                      depends: PhpBrowser
-
     production:
         actor: ApiTester
         path: .
         modules:
             enabled:
                 - REST:
-                    url: http://position.evarun.ru/api/v1
+                    url: http://auth.evarun.ru/api/v1
                     depends: PhpBrowser
 
 paths:

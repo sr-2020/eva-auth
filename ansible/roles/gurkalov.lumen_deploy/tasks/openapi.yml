@@ -1,6 +1,0 @@
----
-- name: Generate openapi
-  command: php {{ app_directory }}/current/artisan swagger-lume:generate
-  when: app_openapi
-  tags:
-    - openapi

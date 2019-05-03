@@ -1,5 +1,0 @@
----
-public_keys:
-  - '/tmp/id_rsa.pub'
-
-enable_passwordless_sudo: true

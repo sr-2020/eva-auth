@@ -71,9 +71,7 @@ class ProfileController extends Controller
     public function read(Request $request)
     {
         $user = $request->user();
-        $model= User::with('location')
-            ->findOrFail($user->id)
-            ->makeVisible(['location']);
+        $model= User::findOrFail($user->id);
         return new JsonResponse($model, JsonResponse::HTTP_OK);
     }
 
@@ -87,9 +85,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        $model= User::with('location')
-            ->findOrFail($user->id)
-            ->makeVisible(['location']);
+        $model= User::findOrFail($user->id);
         $model->fill($request->all());
         $model->save();
         return new JsonResponse($model, JsonResponse::HTTP_OK);

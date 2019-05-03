@@ -1,4 +1,0 @@
----
-- name: start php-fpm
-  command: service php7.2-fpm start
-  when: true

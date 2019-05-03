@@ -1,9 +1,0 @@
----
-- name: Enable jobs scheduling
-  cron:
-    name: "schedule run"
-    minute: "*"
-    job: "php {{ app_directory }}/current/artisan schedule:run"
-  when: app_cron
-  tags:
-    - cron

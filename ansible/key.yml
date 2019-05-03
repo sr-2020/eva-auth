@@ -1,9 +1,0 @@
-- hosts: localhost
-  gather_facts: False
-
-  tasks:
-  - name: Copy private key
-    local_action: copy content={{ vault_private_key }} dest=id_rsa
-
-  - name: Chmod private key
-    local_action: file path=id_rsa mode=0600

@@ -1,9 +1,0 @@
----
-- name: Check {{ php_fpm_pid_file }} exists
-  stat:
-    path: "{{ php_fpm_pid_file }}"
-  register: pid_file
-
-- name: Start {{ php_fpm_service }}
-  command: service {{ php_fpm_service }} start
-  when: not pid_file.stat.exists

@@ -1,9 +1,0 @@
-[server]
-84.201.132.246
-
-[storage]
-84.201.132.246
-
-[localhost]
-127.0.0.1 ansible_connection=local
-curl -X POST -H 'Content-Type: application/json' -d '{"yandexPassportOauthToken": "AQAAAAAF778zAATuwbJfoOzmjELOhfICo03WreA"}' https://iam.api.cloud.yandex.net/iam/v1/tokens

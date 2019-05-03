@@ -19,8 +19,6 @@ $router->group([
     'prefix' => 'api/v1',
     'middleware' => ['auth']
 ], function () use ($router) {
-    $router->post('positions', 'PositionController@create');
-    $router->post('audios', 'AudioController@create');
     $router->get('profile', 'ProfileController@read');
     $router->put('profile', 'ProfileController@update');
 });
@@ -33,12 +31,7 @@ $router->group([
      * CRUD Routes
      */
     foreach ([
-        'shops' => 'ShopController',
         'users' => 'UserController',
-        'items' => 'ItemController',
-        'routers' => 'RouterController',
-        'beacons' => 'BeaconController',
-        'locations' => 'LocationController',
     ] as $path => $controller) {
         $router->post($path, $controller . '@create');
         $router->put($path . '/{id}', $controller . '@update');
@@ -47,10 +40,6 @@ $router->group([
 });
 
 $router->group(['prefix' => 'api/v1'], function () use ($router) {
-    $router->get('check', function () use ($router) {
-        return 'check';
-    });
-
     $router->get('version', function () use ($router) {
         $versionPath = base_path() . '/public/version.txt';
         if (!file_exists($versionPath)) {
@@ -59,15 +48,6 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
 
         return file_get_contents($versionPath);
     });
-
-    $router->get('paths', 'PathController@index');
-
-    $router->get('positions', 'PositionController@index');
-    $router->get('positions/{id}', 'PositionController@read');
-    $router->get('routers/users', 'RouterController@users');
-
-    $router->get('audios', 'AudioController@index');
-    $router->get('audios/{id}', 'AudioController@read');
 
     /**
      * Auth Routes
@@ -79,28 +59,10 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
      * CRUD Routes
      */
     foreach ([
-        'shops' => 'ShopController',
         'users' => 'UserController',
-        'items' => 'ItemController',
-        'routers' => 'RouterController',
-        'beacons' => 'BeaconController',
-        'locations' => 'LocationController',
     ] as $path => $controller) {
         $router->get($path, $controller . '@index');
         $router->get($path . '/{id}', $controller . '@read');
     }
 
-    /**
-     * Relations routes
-     */
-    foreach ([
-        'users/{user_id}/items' => 'UserItemController',
-        'users/{user_id}/shops' => 'UserShopController',
-        'shops/{shop_id}/items' => 'ShopItemController',
-    ] as $path => $controller) {
-        $router->get($path, $controller . '@index');
-        $router->post($path . '/{item_id}', $controller . '@create');
-        $router->get($path . '/{item_id}', $controller . '@read');
-        $router->delete($path . '/{item_id}', $controller . '@delete');
-    }    
 });

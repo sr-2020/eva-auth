@@ -39,15 +39,10 @@ use Illuminate\Support\Facades\Hash;
  *    required={"id"},
  *    @OA\Property(property="id", format="int64", type="integer", example=1),
  *    @OA\Property(property="admin", format="boolean", type="boolean", example=false),
- *    @OA\Property(property="location_id", format="int64", type="integer", nullable=true, example=1),
  *    @OA\Property(property="name", format="string", type="string", example="User Name"),
  *    @OA\Property(property="status", format="string", type="string", example="thebest"),
  *    @OA\Property(property="created_at", format="string", type="string", example="2019-01-26 20:00:00"),
  *    @OA\Property(property="updated_at", format="string", type="string", example="2019-01-26 20:00:57"),
- *    @OA\Property(property="location_updated_at", format="string", type="string", example="2019-01-26 20:00:57"),
- *    @OA\Property(property="location", format="object", type="object",
- *        ref="#/components/schemas/Location"
- *    )
  *    )
  * )
 */
@@ -63,7 +58,6 @@ class User extends Model
         'name',
         'email',
         'password',
-        'location_id',
         'api_key',
         'status'
     ];
@@ -71,13 +65,10 @@ class User extends Model
     protected $visible = [
         'id',
         'admin',
-        'router_id',
-        'location_id',
         'name',
         'status',
         'created_at',
-        'updated_at',
-        'location_updated_at'
+        'updated_at'
     ];
 
     protected static function boot()
@@ -89,14 +80,6 @@ class User extends Model
                 $model->api_key = self::generationApiKey();
             }
         });
-    }
-
-    /**
-     * Get the location where user is.
-     */
-    public function location()
-    {
-        return $this->belongsTo('App\Location');
     }
 
     /**
