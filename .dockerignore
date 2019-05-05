@@ -1,4 +1,3 @@
-/ansible
 /tests
 /src/storage/logs/*
 /src/.env

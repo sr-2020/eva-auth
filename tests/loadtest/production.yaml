@@ -4,12 +4,12 @@ tank:
   token_file: .token
 
 phantom:
-  address: demo.evarun.ru
+  address: auth.evarun.ru
   uris:
   - /api/v1/users
   load_profile:
     load_type: rps
-    schedule: const(50, 1800s)
+    schedule: const(1, 600s)
 console:
   enabled: true
 telegraf:
