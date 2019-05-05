@@ -1,4 +1,5 @@
 NAMESPACE=gurkalov
+SERVICE := auth
 IMAGE := $(or ${image},${image},eva-auth)
 TAG := :$(or ${tag},${tag},latest)
 ENV := $(or ${env},${env},local)
@@ -12,7 +13,7 @@ push:
 
 deploy:
 	{ \
-	sshpass -p $(password) ssh -o StrictHostKeyChecking=no deploy@$(server) "cd /var/services/$(IMAGE) ;\
+	sshpass -p $(password) ssh -o StrictHostKeyChecking=no deploy@$(server) "cd /var/services/$(SERVICE) ;\
 	docker-compose pull app ;\
 	docker-compose rm -fsv app ;\
 	docker-compose up -d --no-deps --build app" ;\
