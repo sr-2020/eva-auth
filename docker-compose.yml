@@ -9,7 +9,6 @@ services:
       - .env:/var/www/html/.env
     environment:
       SKIP_COMPOSER: 1
-      SKIP_CHOWN: 1
     links:
       - database
 
