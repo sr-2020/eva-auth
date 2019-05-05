@@ -11,9 +11,7 @@ jobs:
   - stage: build and push docker image
     script:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - cd src
-    - composer install --no-interaction
-    - cd ../
+    - cd src && composer install --no-interaction && cd ../
     - make build
     - make push
 
@@ -23,10 +21,8 @@ jobs:
 
   - stage: test production
     script:
-      - cd tests
-      - composer install --no-interaction
-      - cd ../ansible
-      - make codecept-production env=production
+      - cd tests && composer install --no-interaction && cd ../
+      - make test env=production
 
 addons:
   sonarcloud:

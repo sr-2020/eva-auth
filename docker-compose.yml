@@ -16,7 +16,7 @@ services:
   database:
     image: ${IMAGE_DATABASE}
     volumes:
-      - eva-platform-db:/var/lib/mysql
+      - eva-auth-db:/var/lib/mysql
       - ./docker/mysql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -28,4 +28,4 @@ services:
     image: ${IMAGE_REDIS}
 
 volumes:
-  eva-platform-db:
+  eva-auth-db:
