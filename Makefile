@@ -17,9 +17,13 @@ deploy:
 	{ \
 	sshpass -p $(password) ssh -o StrictHostKeyChecking=no deploy@$(server) "cd /var/services/$(SERVICE) ;\
 	docker-compose pull app ;\
-	docker-compose rm -fsv app ;\
-	docker-compose up -d --no-deps --build app" ;\
+	docker-compose rm -fs app ;\
+	docker-compose up -d --no-deps app" ;\
 	}
+
+deploy-local:
+	docker-compose rm -fs app
+	docker-compose up --no-deps app
 
 up:
 	docker-compose up -d
