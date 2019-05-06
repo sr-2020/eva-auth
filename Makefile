@@ -43,4 +43,4 @@ test:
 	cd tests && php vendor/bin/codecept run $(ENV) $(cest)
 
 load:
-	docker run -v $(current_dir)/tests/loadtest:/var/loadtest --net host --entrypoint /bin/bash -it direvius/yandex-tank
+	docker run -v $(current_dir)/tests/loadtest:/var/loadtest --net host --entrypoint /usr/local/bin/yandex-tank -it direvius/yandex-tank -c production.yaml
