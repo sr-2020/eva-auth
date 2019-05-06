@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/gurkalov/eva-position.svg?branch=master)](https://travis-ci.org/gurkalov/eva-position)
-# Eva Position Platform
+# Eva Auth Service
 
-Swagger OpenAPI 3 documentaton: http://position.evarun.ru/api/documentation
+Swagger OpenAPI 3 documentaton: http://auth.evarun.ru/api/documentation
 
 - [Пользователи](#users)
 	- [Регистрация](#registration)
@@ -9,15 +9,10 @@ Swagger OpenAPI 3 documentaton: http://position.evarun.ru/api/documentation
 	- [Авторизационный токен](#authtoken)
 	- [Профиль](#profile)
 	- [Список пользователей с местоположением и статусами](#usersList)
-- [Позиционирование](#position)
-	- [Маячки](#beacons)
-	- [Локации](#locations)
-	- [Отправка слышимости маячков](#positions)
-	- [Пути](#paths)
 
 ## <a name="users"></a> Пользователи
 #### <a name="registration"></a> Регистрация
-Регистрация осуществляется через POST запрос на http://position.evarun.ru/api/v1/register
+Регистрация осуществляется через POST запрос на http://auth.evarun.ru/api/v1/register
 
 Тело запроса:
 ```
@@ -37,12 +32,12 @@ Swagger OpenAPI 3 documentaton: http://position.evarun.ru/api/documentation
 
 Пример:
 ```
-curl -X POST "http://position.evarun.ru/api/v1/register" -H "Content-Type: application/json" -d "{\"email\":\"example@example.com\",\"password\":\"hunter2\",\"name\":\"John Doe\"}"
+curl -X POST "http://auth.evarun.ru/api/v1/register" -H "Content-Type: application/json" -d "{\"email\":\"example@example.com\",\"password\":\"hunter2\",\"name\":\"John Doe\"}"
 ```
 
 
 #### <a name="authorization"></a> Авторизация
-Авторизация осуществляется через POST запрос на http://position.evarun.ru/api/v1/login
+Авторизация осуществляется через POST запрос на http://auth.evarun.ru/api/v1/login
 
 Тело запроса:
 ```
@@ -61,7 +56,7 @@ curl -X POST "http://position.evarun.ru/api/v1/register" -H "Content-Type: appli
 
 Пример:
 ```
-curl -X POST "http://position.evarun.ru/api/v1/login" -H "Content-Type: application/json" -d "{\"email\":\"example@example.com\",\"password\":\"hunter2\"}"
+curl -X POST "http://auth.evarun.ru/api/v1/login" -H "Content-Type: application/json" -d "{\"email\":\"example@example.com\",\"password\":\"hunter2\"}"
 ```
 
 #### <a name="authtoken"></a> Авторизационный токен
@@ -78,7 +73,7 @@ curl -X POST "http://position.evarun.ru/api/v1/login" -H "Content-Type: applicat
 Все действия для получения общей информации не требуют использования авторизационного токена.
 
 #### <a name="profile"></a> Профиль
-Получение информации о текущем пользователе осуществляется через GET запрос на http://position.evarun.ru/api/v1/profile с авторизационным токеном `api_key`.
+Получение информации о текущем пользователе осуществляется через GET запрос на http://auth.evarun.ru/api/v1/profile с авторизационным токеном `api_key`.
 
 Этот кейс может быть полезен, когда нужно получить информацию только по одному конкретному авторизованному пользователю, вместо того, чтобы грузить весь список пользователей.
 
@@ -104,10 +99,10 @@ curl -X POST "http://position.evarun.ru/api/v1/login" -H "Content-Type: applicat
 
 Пример:
 ```
-curl -X GET "http://position.evarun.ru/api/v1/profile" -H "Authorization: Bearer MmVDDllSdUpKa0h5MFBDdjN1QnlVbEVC"
+curl -X GET "http://auth.evarun.ru/api/v1/profile" -H "Authorization: Bearer MmVDDllSdUpKa0h5MFBDdjN1QnlVbEVC"
 ```
 
-Редактирование информации о текущем пользователе осуществляется через PUT запрос на http://position.evarun.ru/api/v1/profile с авторизационным токеном `api_key`
+Редактирование информации о текущем пользователе осуществляется через PUT запрос на http://auth.evarun.ru/api/v1/profile с авторизационным токеном `api_key`
 
 Тело запроса:
 ```
@@ -138,12 +133,12 @@ curl -X GET "http://position.evarun.ru/api/v1/profile" -H "Authorization: Bearer
 
 Пример:
 ```
-curl -X PUT "http://position.evarun.ru/api/v1/profile" -H "Authorization: Bearer MmVDDllSdUpKa0h5MFBDdjN1QnlVbEVC" -H "Content-Type: application/json" -d "{\"email\":\"api-test@email.com\",\"password\":\"secret\",\"name\":\"Api Tim Cook\",\"status\":\"free\"}"```
+curl -X PUT "http://auth.evarun.ru/api/v1/profile" -H "Authorization: Bearer MmVDDllSdUpKa0h5MFBDdjN1QnlVbEVC" -H "Content-Type: application/json" -d "{\"email\":\"api-test@email.com\",\"password\":\"secret\",\"name\":\"Api Tim Cook\",\"status\":\"free\"}"```
 ```
 
-#### <a name="usersList"></a> Список пользователей с местоположением и статусами
+#### <a name="usersList"></a> Список пользователей со статусами
 
-Получение информации о текущем местоположении и статусах всех пользователей осуществляется через GET запрос на http://position.evarun.ru/api/v1/users
+Получение информации о статусах всех пользователей осуществляется через GET запрос на http://auth.evarun.ru/api/v1/users
 
 Данные в этом списке кэшируются на 1 секунду методом автоматического прогревания кэша крон-скриптом.
 
@@ -151,9 +146,7 @@ curl -X PUT "http://position.evarun.ru/api/v1/profile" -H "Authorization: Bearer
  - `name` (имя указанное при регистрации)
  - `status` (статус выбранный пользователем)
  - `created_at` (время когда пользователь зарегистрировался в системе)
- - `updated_at` (время когда пользователь в последний раз обновлял свой профиль или местоположение)
- - `location_updated_at` (время когда от пользователя в последний раз пришел непустой набор BLE-устройств)
- - `location.label` (человеко-читаемое название локации)
+ - `updated_at` (время когда пользователь в последний раз обновлял свой профиль)
 
 Тело ответа:
 ```
@@ -164,13 +157,7 @@ curl -X PUT "http://position.evarun.ru/api/v1/profile" -H "Authorization: Bearer
       "name": "Api Tim Cook",
       "status": "free",
       "created_at": "2019-03-24 21:08:00",
-      "updated_at": "2019-03-24 21:08:30",
-      "location_updated_at": "2019-03-24 21:08:30",
-      "location_id": 1,
-      "location": {
-        "id": 1,
-        "label": "Танц-фойе Рим, 2 этаж"
-      }
+      "updated_at": "2019-03-24 21:08:30"
     },
     ...
 ]
@@ -178,14 +165,5 @@ curl -X PUT "http://position.evarun.ru/api/v1/profile" -H "Authorization: Bearer
 
 Пример:
 ```
-curl -X GET "http://position.evarun.ru/api/v1/users"
+curl -X GET "http://auth.evarun.ru/api/v1/users"
 ```
-
-## <a name="position"></a> Позиционирование
-#### <a name="beacons"></a> Маячки
-
-#### <a name="locations"></a> Локации
-
-#### <a name="positions"></a> Отправка слышимости маячков
-
-#### <a name="paths"></a> Пути
