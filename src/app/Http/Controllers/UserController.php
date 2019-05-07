@@ -158,33 +158,4 @@ class UserController extends Controller
     use Traits\CrudTrait;
     
     const MODEL = User::class;
-
-//    /**
-//     * Display a listing of the resource.
-//     *
-//     * @return JsonResponse
-//     */
-//    public function index()
-//    {
-//        $modelClass = self::MODEL;
-//        $list = $modelClass::with('location')
-//            ->get()
-//            ->makeVisible(['location']);
-//        return new JsonResponse($list, JsonResponse::HTTP_OK);
-//    }
-//
-//    /**
-//     * Display the specified resource.
-//     *
-//     * @param  int  $id
-//     * @return \Illuminate\Http\JsonResponse
-//     */
-//    public function read($id)
-//    {
-//        $modelClass = self::MODEL;
-//        $model= $modelClass::with('location')
-//            ->findOrFail($id)
-//            ->makeVisible(['location']);
-//        return new JsonResponse($model, JsonResponse::HTTP_OK);
-//    }
 }

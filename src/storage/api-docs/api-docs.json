@@ -1,15 +1,15 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "EVA API",
+        "title": "EVA Auth API",
         "contact": {
             "email": "gurkalov.dev@gmail.com"
         },
-        "version": "0.0.2"
+        "version": "0.1.0"
     },
     "servers": [
         {
-            "url": "http://position.evarun.ru"
+            "url": "http://auth.evarun.ru"
         }
     ],
     "paths": {
