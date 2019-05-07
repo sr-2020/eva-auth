@@ -1,3 +1,4 @@
+DOCKER_COMPOSE_VERSION=1.24.0
 NAMESPACE=gurkalov
 SERVICE := auth
 IMAGE := $(or ${image},${image},eva-auth)
@@ -43,6 +44,12 @@ restart:
 
 install:
 	cp .env.example .env
+
+install-docker-compose:
+	curl -L https://github.com/docker/compose/releases/download/$(DOCKER_COMPOSE_VERSION)/docker-compose-Linux-x86_64 > /tmp/docker-compose
+	chmod +x /tmp/docker-compose
+	sudo mv /tmp/docker-compose /usr/local/bin/docker-compose
+	docker-compose -v
 
 test:
 	docker run -v $(current_dir)/tests:/project --net host codeception/codeception run $(ENV) $(cest)
