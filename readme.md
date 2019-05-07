@@ -87,13 +87,7 @@ curl -X POST "http://auth.evarun.ru/api/v1/login" -H "Content-Type: application/
   "name": "Api Tim Cook",
   "status": "free",
   "created_at": "2019-03-24 21:08:00",
-  "updated_at": "2019-03-24 21:08:30",
-  "location_updated_at": "2019-03-24 21:08:30",
-  "location_id": 1,
-  "location": {
-    "id": 1,
-    "label": "Танц-фойе Рим, 2 этаж"
-  }
+  "updated_at": "2019-03-24 21:08:30"
 }
 ```
 
@@ -121,13 +115,7 @@ curl -X GET "http://auth.evarun.ru/api/v1/profile" -H "Authorization: Bearer MmV
   "name": "Api Tim Cook",
   "status": "free",
   "created_at": "2019-03-24 21:08:00",
-  "updated_at": "2019-03-24 21:08:30",
-  "location_updated_at": "2019-03-24 21:08:30",
-  "location_id": 1,
-  "location": {
-    "id": 1,
-    "label": "Танц-фойе Рим, 2 этаж"
-  }
+  "updated_at": "2019-03-24 21:08:30"
 }
 ```
 
