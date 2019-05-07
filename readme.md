@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/gurkalov/eva-position.svg?branch=master)](https://travis-ci.org/gurkalov/eva-position)
+[![Build Status](https://travis-ci.org/gurkalov/eva-auth.svg?branch=master)](https://travis-ci.org/gurkalov/eva-auth)
 # Eva Auth Service
 
 Swagger OpenAPI 3 documentaton: http://auth.evarun.ru/api/documentation
