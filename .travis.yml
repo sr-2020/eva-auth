@@ -21,7 +21,6 @@ jobs:
 
   - stage: test production
     script:
-      - cd tests && composer install --no-interaction && cd ../
       - make test env=production
 
 addons:
