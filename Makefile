@@ -27,6 +27,9 @@ deploy-local:
 up:
 	docker-compose up -d
 
+dev:
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
 down:
 	docker-compose down
 
@@ -38,8 +41,11 @@ restart:
 	docker-compose down -v
 	docker-compose up -d
 
+install:
+	cp .env.example .env
+
 test:
-	cd tests && php vendor/bin/codecept run $(ENV) $(cest)
+	docker run -v $(current_dir)/tests:/project --net host codeception/codeception run $(ENV) $(cest)
 
 load:
 	docker run -v $(current_dir)/tests/loadtest:/var/loadtest --net host --entrypoint /usr/local/bin/yandex-tank -it direvius/yandex-tank -c production.yaml

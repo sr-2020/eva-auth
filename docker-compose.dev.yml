@@ -4,7 +4,4 @@ services:
   app:
     volumes:
       - ./src/:/var/www/html
-      - ./docker/.env:/var/www/html/.env
-    environment:
-      SKIP_COMPOSER: 1
-      SKIP_CHOWN: 1
+      - .env:/var/www/html/.env

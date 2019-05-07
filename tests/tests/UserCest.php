@@ -15,10 +15,10 @@ class UserCest
 
     public function createTest(ApiTester $I)
     {
-        $faker = Faker\Factory::create();
+        $email = 'test' . rand(0, 10000) . '@mail.com';
         $data = [
             'name' => 'User Test',
-            'email' => $faker->email,
+            'email' => $email,
             'password' => 'secret'
         ];
 
