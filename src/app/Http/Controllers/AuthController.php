@@ -53,7 +53,7 @@ use App\Mail\UserRegistration;
  *         )
  *     ),
  *     @OA\Response(
- *         response=200,
+ *         response=201,
  *         description="Register user",
  *         @OA\JsonContent(ref="#/components/schemas/UserApiKey")
  *     ),
@@ -122,6 +122,6 @@ class AuthController extends Controller
         Mail::to($user)->send(new UserRegistration($request->all()));
 
         $user->setVisible(['id', 'api_key']);
-        return new JsonResponse($user->toArray(), JsonResponse::HTTP_OK);
+        return new JsonResponse($user->toArray(), JsonResponse::HTTP_CREATED);
     }
 }
