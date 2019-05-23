@@ -1,6 +1,6 @@
 DOCKER_COMPOSE_VERSION=1.24.0
-NAMESPACE=gurkalov
-SERVICE := auth
+NAMESPACE=sr2020
+SERVICE := platform
 IMAGE := $(or ${image},${image},eva-auth)
 TAG := :$(or ${tag},${tag},latest)
 ENV := $(or ${env},${env},local)
@@ -17,8 +17,8 @@ push:
 deploy:
 	{ \
 	sshpass -p $(password) ssh -o StrictHostKeyChecking=no deploy@$(server) "cd /var/services/$(SERVICE) ;\
-	docker-compose pull app ;\
-	docker-compose up -d --no-deps app" ;\
+	docker-compose pull auth-app ;\
+	docker-compose up -d --no-deps auth-app" ;\
 	}
 
 deploy-local:
