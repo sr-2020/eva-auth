@@ -16,5 +16,7 @@ RUN mkdir -p /etc/supervisor/conf.d/
 ADD docker/supervisor/crond.conf /etc/supervisor/conf.d/
 
 ADD ./src /var/www/html
+RUN cp /var/www/html/.env.docker /var/www/html/.env
+
 RUN chown -R nginx:nginx /var/www/html
 RUN chmod -R 777 /var/www/html/storage/
