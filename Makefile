@@ -6,6 +6,7 @@ GIT_TAG := $(shell git tag -l --points-at HEAD)
 TAG := :$(or ${tag},${tag},$(or ${GIT_TAG},${GIT_TAG},latest))
 ENV := $(or ${env},${env},local)
 cest := $(or ${cest},${cest},)
+DB_ROOT_PASS := $(shell grep DB_ROOT_PASSWORD .env | cut -d= -f2)
 
 current_dir = $(shell pwd)
 
@@ -33,7 +34,10 @@ up:
 	docker-compose up -d
 
 dev:
-	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
+dev-up:
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --force-recreate --no-deps app
 
 down:
 	docker-compose down
@@ -73,3 +77,7 @@ test:
 
 load:
 	docker run -v $(current_dir)/tests/loadtest:/var/loadtest --net host --entrypoint /usr/local/bin/yandex-tank -it direvius/yandex-tank -c production.yaml
+
+dump:
+	docker-compose exec app php artisan migrate:refresh --seed
+	docker exec -it eva-auth_database_1 mysqldump -u root -p${DB_ROOT_PASS} eva-auth | grep -v "mysqldump: \[Warning\]" > docker/mysql/dump.sql

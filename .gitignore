@@ -2,6 +2,7 @@
 /src/tests/build
 /src/composer.lock
 /src/.scannerwork
+/src/.phpunit.result.cache
 /src/.env
 /tests/vendor
 /tests/loadtest/logs

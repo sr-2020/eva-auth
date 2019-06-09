@@ -83,7 +83,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Register user",
                         "content": {
                             "application/json": {
@@ -378,6 +378,16 @@
                         "type": "string",
                         "format": "string",
                         "example": "thebest"
+                    },
+                    "options": {
+                        "type": "object",
+                        "format": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {},
+                            "example": "{}"
+                        },
+                        "example": "{}"
                     },
                     "created_at": {
                         "type": "string",

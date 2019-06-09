@@ -41,6 +41,13 @@ use Illuminate\Support\Facades\Hash;
  *    @OA\Property(property="admin", format="boolean", type="boolean", example=false),
  *    @OA\Property(property="name", format="string", type="string", example="User Name"),
  *    @OA\Property(property="status", format="string", type="string", example="thebest"),
+ *    @OA\Property(property="options", format="array", type="object", example="{}",
+ *      @OA\Items(
+ *          type="array",
+ *          example="{}",
+ *          @OA\Items()
+ *      ),
+ *    ),
  *    @OA\Property(property="created_at", format="string", type="string", example="2019-01-26 20:00:00"),
  *    @OA\Property(property="updated_at", format="string", type="string", example="2019-01-26 20:00:57"),
  *    )
@@ -50,7 +57,8 @@ use Illuminate\Support\Facades\Hash;
 class User extends Model
 {
     protected $casts = [
-        'admin' => 'boolean'
+        'admin' => 'boolean',
+        'options' => 'object'
     ];
 
     protected $fillable = [
@@ -59,7 +67,8 @@ class User extends Model
         'email',
         'password',
         'api_key',
-        'status'
+        'status',
+        'options'
     ];
 
     protected $visible = [
@@ -68,7 +77,8 @@ class User extends Model
         'name',
         'status',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'options'
     ];
 
     protected static function boot()

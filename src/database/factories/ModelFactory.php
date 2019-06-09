@@ -17,6 +17,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'admin' => false,
         'email' => $faker->email,
         'password' => $faker->password,
-        'status' => $faker->safeColorName
+        'status' => $faker->safeColorName,
+        'options' => (object)['a' => true, 'b' => 1, 'c' => 'on']
     ];
 });
