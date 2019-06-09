@@ -11,8 +11,8 @@ jobs:
   - stage: build and push docker image
     script:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - cd src && composer install --no-interaction && cd ../
     - make build
+    - make image
     - make push
 
   - stage: deploy production

@@ -10,6 +10,9 @@ cest := $(or ${cest},${cest},)
 current_dir = $(shell pwd)
 
 build:
+	cd src && composer install --no-interaction && vendor/bin/phpunit
+
+image:
 	docker build -t ${NAMESPACE}/${IMAGE}${TAG} .
 
 push:
@@ -61,6 +64,7 @@ test-local:
 
 test-dev:
 	make build
+	make image
 	make up
 	make test
 
