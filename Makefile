@@ -45,6 +45,7 @@ restart:
 
 install:
 	cp .env.example .env
+	cp src/.env.example src/.env
 
 install-docker-compose:
 	curl -L https://github.com/docker/compose/releases/download/$(DOCKER_COMPOSE_VERSION)/docker-compose-Linux-x86_64 > /tmp/docker-compose

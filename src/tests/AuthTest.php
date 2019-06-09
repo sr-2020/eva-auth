@@ -77,7 +77,7 @@ class AuthTest extends TestCase
             'email' => $model->email,
             'password' => 'pass'
         ])
-            ->seeStatusCode(JsonResponse::HTTP_OK)
+            ->seeStatusCode(JsonResponse::HTTP_CREATED)
             ->seeJsonStructure([
                 'id',
                 'api_key'
