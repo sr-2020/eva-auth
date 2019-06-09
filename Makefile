@@ -2,7 +2,8 @@ DOCKER_COMPOSE_VERSION=1.24.0
 NAMESPACE=sr2020
 SERVICE := platform
 IMAGE := $(or ${image},${image},eva-auth)
-TAG := :$(or ${tag},${tag},latest)
+GIT_TAG := $(shell git tag -l --points-at HEAD)
+TAG := :$(or ${tag},${tag},$(or ${GIT_TAG},${GIT_TAG},latest))
 ENV := $(or ${env},${env},local)
 cest := $(or ${cest},${cest},)
 
