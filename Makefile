@@ -51,6 +51,17 @@ install-docker-compose:
 	sudo mv /tmp/docker-compose /usr/local/bin/docker-compose
 	docker-compose -v
 
+test-install:
+	cd tests/ && composer install
+
+test-local:
+	cd tests/ && vendor/bin/codecept run $(ENV) $(cest)
+
+test-dev:
+	make build
+	make up
+	make test
+
 test:
 	docker run -v $(current_dir)/tests:/project --net host codeception/codeception run $(ENV) $(cest)
 
