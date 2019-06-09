@@ -51,7 +51,16 @@ class ProfileCest
     {
         $data = [
             'name' => 'New Name' . rand(0, 100000),
-            'status' => 'NewStatus'
+            'status' => 'NewStatus',
+            'options' => [
+                'a' => true,
+                'b' => 1,
+                'c' => 'str',
+                'd' => [
+                    'a' => true
+                ],
+                'e' => null
+            ]
         ];
 
         $I->haveHttpHeader('Content-Type', 'application/json');
@@ -65,12 +74,14 @@ class ProfileCest
             'status' => 'string',
             'name' => 'string',
             'created_at' => 'string',
-            'updated_at' => 'string'
+            'updated_at' => 'string',
+            'options' => 'array',
         ]);
 
         $I->canSeeResponseContainsJson([
             'name' => $data['name'],
             'status' => $data['status'],
+            'options' => $data['options']
         ]);
     }
 }
