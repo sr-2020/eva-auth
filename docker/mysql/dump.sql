@@ -16,6 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `eva-auth`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `eva-auth` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
+USE `eva-auth`;
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -27,7 +35,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +44,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (34,'2018_10_14_000000_create_users_table',1),(35,'2019_06_09_134106_add_options_column_to_users',1);
+INSERT INTO `migrations` VALUES (36,'2018_10_14_000000_create_users_table',1),(37,'2019_06_09_134106_add_options_column_to_users',1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,7 +79,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,1,'yellow','Мистер X','admin@evarun.ru','$2y$10$DZ4mni1q0eQlb7QmELa7je0tZZu.AH42wpnWI5dkg2KJ1AoIR7tUe','TkRVem4yTERSQTNQRHFxcmo4SUozNWZp','2019-06-09 16:24:34','2019-06-09 16:24:34','{\"a\": true, \"b\": 1, \"c\": \"on\"}');
+INSERT INTO `users` VALUES (1,1,'aqua','Мистер X','admin@evarun.ru','$2y$10$hGBL5n7ycHtWDnhR8Hd/4uNYHxZ89tLQj/gjWL.4qPjJHzk47rdQW','TkRVem4yTERSQTNQRHFxcmo4SUozNWZp','2019-06-10 06:52:01','2019-06-10 06:52:01','{\"a\": true, \"b\": 1, \"c\": \"on\"}');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -84,4 +92,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-09 16:24:34
+-- Dump completed on 2019-06-10  6:52:01

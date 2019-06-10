@@ -81,4 +81,4 @@ load:
 
 dump:
 	docker-compose exec app php artisan migrate:refresh --seed
-	docker exec -it eva-auth_database_1 mysqldump -u root -p${DB_ROOT_PASS} eva-auth | grep -v "mysqldump: \[Warning\]" > docker/mysql/dump.sql
+	docker exec -it eva-auth_database_1 mysqldump -u root -p${DB_ROOT_PASS} --databases eva-auth | grep -v "mysqldump: \[Warning\]" > docker/mysql/dump.sql
