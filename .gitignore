@@ -1,6 +1,5 @@
 /src/vendor
 /src/tests/build
-/src/composer.lock
 /src/.scannerwork
 /src/.phpunit.result.cache
 /src/.env
