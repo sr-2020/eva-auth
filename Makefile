@@ -6,7 +6,7 @@ GIT_TAG := $(shell git tag -l --points-at HEAD | cut -d "v" -f 2)
 TAG := :$(or ${tag},${tag},$(or ${GIT_TAG},${GIT_TAG},latest))
 ENV := $(or ${env},${env},local)
 cest := $(or ${cest},${cest},)
-DB_ROOT_PASS := $(shell grep DB_ROOT_PASSWORD .env | cut -d= -f2)
+DB_PASSWORD := $(shell grep DB_PASSWORD .env | cut -d= -f2)
 
 current_dir = $(shell pwd)
 
@@ -81,4 +81,4 @@ load:
 
 dump:
 	docker-compose exec app php artisan migrate:refresh --seed
-	docker exec -it eva-auth_database_1 mysqldump -u root -p${DB_ROOT_PASS} --databases eva-auth | grep -v "mysqldump: \[Warning\]" > docker/mysql/dump.sql
+	PGPASSWORD=$(DB_PASSWORD) pg_dump -h localhost -U app -Fp eva-auth > docker/postgres/dump.sql
