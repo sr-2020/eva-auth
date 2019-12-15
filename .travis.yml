@@ -3,25 +3,32 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-language: php
+language: python
 php:
   - '7.2'
+python:
+  - '3.6'
 jobs:
   include:
-  - stage: build and push docker image
-    script:
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - make build
-    - make image
-    - make push
+    - stage: schemathesis
+      script:
+        - pip3 install schemathesis
+        - schemathesis --version
 
-  - stage: deploy production
-    script:
-    - make deploy server=instance.evarun.ru password=$USER_PASSWORD
+    - stage: build and push docker image
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - make build
+      - make image
+      - make push
 
-  - stage: test production
-    script:
-      - make test env=production
+#  - stage: deploy production
+#    script:
+#    - make deploy server=instance.evarun.ru password=$USER_PASSWORD
+#
+#  - stage: test production
+#    script:
+#      - make test env=production
 
 addons:
   sonarcloud:
