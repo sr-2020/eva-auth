@@ -290,6 +290,16 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "User bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "unexpected error",
                         "content": {

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Description of CrudTrait
@@ -137,6 +138,14 @@ trait CrudTrait
      */
     public function read($id)
     {
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|integer|between:1,100000000'
+        ]);
+
+        if ($validator->fails()) {
+            return new JsonResponse($validator->getMessageBag(), JsonResponse::HTTP_BAD_REQUEST);
+        }
+
         $modelClass = self::MODEL;
         $model= $modelClass::findOrFail($id);
         return new JsonResponse($model, JsonResponse::HTTP_OK);

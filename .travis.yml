@@ -10,11 +10,6 @@ python:
   - '3.6'
 jobs:
   include:
-    - stage: schemathesis
-      script:
-        - pip3 install schemathesis
-        - schemathesis --version
-
     - stage: build and push docker image
       script:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -22,13 +17,19 @@ jobs:
       - make image
       - make push
 
-#  - stage: deploy production
-#    script:
-#    - make deploy server=instance.evarun.ru password=$USER_PASSWORD
-#
-#  - stage: test production
-#    script:
-#      - make test env=production
+    - stage: deploy production
+      script:
+      - make deploy server=instance.evarun.ru password=$USER_PASSWORD
+
+    - stage: test production
+      script:
+        - make test env=production
+
+    - stage: test openapi3
+      script:
+        - pip3 install schemathesis
+        - schemathesis --version
+        - schemathesis run -c not_a_server_error -c status_code_conformance -c content_type_conformance -c response_schema_conformance http://auth.evarun.ru/docs
 
 addons:
   sonarcloud:
