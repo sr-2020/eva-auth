@@ -3,6 +3,8 @@
 /src/.scannerwork
 /src/.phpunit.result.cache
 /src/.env
+/.hypothesis
+/src/__pycache__/
 /tests/vendor
 /tests/loadtest/logs
 /tests/loadtest/.token

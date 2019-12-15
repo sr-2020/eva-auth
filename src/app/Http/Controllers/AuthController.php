@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\JsonResponse;
@@ -28,6 +29,11 @@ use App\Mail\UserRegistration;
  *         response=200,
  *         description="Authorize user",
  *         @OA\JsonContent(ref="#/components/schemas/UserApiKey")
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Bad request error",
+ *         @OA\JsonContent(type="object")
  *     ),
  *     @OA\Response(
  *         response="default",
@@ -58,6 +64,11 @@ use App\Mail\UserRegistration;
  *         @OA\JsonContent(ref="#/components/schemas/UserApiKey")
  *     ),
  *     @OA\Response(
+ *         response=400,
+ *         description="Bad request error",
+ *         @OA\JsonContent(type="object")
+ *     ),
+ *     @OA\Response(
  *         response="default",
  *         description="unexpected error",
  *         @OA\JsonContent(ref="#/components/schemas/ErrorModel"),
@@ -76,6 +87,15 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email'    => 'required',
+            'password' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return new JsonResponse($validator->getMessageBag(), JsonResponse::HTTP_BAD_REQUEST);
+        }
+
         $this->validate($request, [
             'email'    => 'required',
             'password' => 'required'
@@ -104,10 +124,14 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'email'    => 'required',
             'password' => 'required'
         ]);
+
+        if ($validator->fails()) {
+            return new JsonResponse($validator->getMessageBag(), JsonResponse::HTTP_BAD_REQUEST);
+        }
 
         try {
             $user = User::create([

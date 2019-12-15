@@ -29,6 +29,13 @@ use Illuminate\Http\JsonResponse;
  *             @OA\Items(ref="#/components/schemas/User")
  *         ),
  *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="User bad request",
+ *         @OA\JsonContent(
+ *             type="object"
+ *         ),
+ *     ),
  * )
  */
 

@@ -49,6 +49,26 @@ class AuthTest extends TestCase
      *
      * @return void
      */
+    public function testLoginEmptyParams()
+    {
+        $password = 'pass';
+        $model = $this->makeFactory();
+        $model->password = $password;
+        $model->save();
+
+        $this->json('POST', '/api/v1/login', [
+            'email' => '',
+            'password' => ''
+        ])
+            ->seeStatusCode(JsonResponse::HTTP_BAD_REQUEST)
+            ->seeJsonStructure([]);
+    }
+
+    /**
+     * A basic test login failed.
+     *
+     * @return void
+     */
     public function testLoginFailed()
     {
         $password = 'pass';
@@ -105,8 +125,7 @@ class AuthTest extends TestCase
             'email' => $model->email,
             'password' => ''
         ])
-            ->seeStatusCode(JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+            ->seeStatusCode(JsonResponse::HTTP_BAD_REQUEST)
             ->seeJsonStructure([]);
     }
-
 }

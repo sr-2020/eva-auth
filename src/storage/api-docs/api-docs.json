@@ -46,6 +46,16 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Bad request error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "default": {
                         "description": "unexpected error",
                         "content": {
@@ -89,6 +99,16 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/UserApiKey"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
                                 }
                             }
                         }
@@ -222,6 +242,16 @@
                                     "items": {
                                         "$ref": "#/components/schemas/User"
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "User bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
                                 }
                             }
                         }

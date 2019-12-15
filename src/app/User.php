@@ -117,4 +117,13 @@ class User extends Model
     {
         $this->api_key = self::generationApiKey();
     }
+
+    public function getOptionsAttribute($value)
+    {
+        if (is_null($value)) {
+            return (object)[];
+        }
+
+        return json_decode($value);
+    }
 }
