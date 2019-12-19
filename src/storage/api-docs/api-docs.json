@@ -186,11 +186,21 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Register user",
+                        "description": "Profile info user",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Profile bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
                                 }
                             }
                         }

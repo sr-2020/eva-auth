@@ -45,8 +45,15 @@ use Illuminate\Http\Request;
  *     ),
  *     @OA\Response(
  *         response=200,
- *         description="Register user",
+ *         description="Profile info user",
  *         @OA\JsonContent(ref="#/components/schemas/User")
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Profile bad request",
+ *         @OA\JsonContent(
+ *             type="object"
+ *         ),
  *     ),
  *     @OA\Response(
  *         response=401,
@@ -71,7 +78,7 @@ class ProfileController extends Controller
     public function read(Request $request)
     {
         $user = $request->user();
-        $model= User::findOrFail($user->id);
+        $model = User::findOrFail($user->id);
         return new JsonResponse($model, JsonResponse::HTTP_OK);
     }
 
