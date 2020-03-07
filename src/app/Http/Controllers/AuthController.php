@@ -140,7 +140,7 @@ class AuthController extends Controller
                 'name' => $request->input('name', '')
             ]);
         } catch (\Exception $e) {
-            return new JsonResponse([], JsonResponse::HTTP_BAD_REQUEST);
+            return new JsonResponse($e->getMessage(), JsonResponse::HTTP_BAD_REQUEST);
         }
 
         Mail::to($user)->send(new UserRegistration($request->all()));
