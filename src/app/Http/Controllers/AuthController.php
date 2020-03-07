@@ -143,7 +143,7 @@ class AuthController extends Controller
             return new JsonResponse($e->getMessage(), JsonResponse::HTTP_BAD_REQUEST);
         }
 
-        Mail::to($user)->send(new UserRegistration($request->all()));
+        //Mail::to($user)->send(new UserRegistration($request->all()));
 
         $user->setVisible(['id', 'api_key']);
         return new JsonResponse($user->toArray(), JsonResponse::HTTP_CREATED);

@@ -21,10 +21,10 @@ class ValidateMiddleware
             return new JsonResponse(null, JsonResponse::HTTP_BAD_REQUEST);
         }
 
-        $email = $request->get('email', null);
-        if ($email && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return new JsonResponse(null, JsonResponse::HTTP_BAD_REQUEST);
-        }
+//        $email = $request->get('email', null);
+//        if ($email && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+//            return new JsonResponse(null, JsonResponse::HTTP_BAD_REQUEST);
+//        }
 
         return $next($request);
     }
