@@ -80,6 +80,14 @@ trait CrudTrait
         foreach ($filter as $field => $value) {
             $query->where($field, '=', $value);
         }
+        $filter = $request->get('filterge', []);
+        foreach ($filter as $field => $value) {
+            $query->where($field, '>=', $value);
+        }
+        $filter = $request->get('filterle', []);
+        foreach ($filter as $field => $value) {
+            $query->where($field, '<=', $value);
+        }
     }
 
     /**
