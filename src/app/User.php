@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @OA\Schema(schema="LoginCreds", required={"email", "password"},
@@ -115,7 +116,9 @@ class User extends Model
      */
     public function resetApiKey()
     {
+        $oldKey = $this->api_key;
         $this->api_key = self::generationApiKey();
+        Log::info(sprintf("Authorization: UserId: %d, OldKey: %s, NewKey: %s", $this->id, $oldKey, $this->api_key));
     }
 
     public function getOptionsAttribute($value)
