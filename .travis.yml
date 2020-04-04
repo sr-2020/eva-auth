@@ -36,21 +36,6 @@ jobs:
     - stage: test production
       script:
         - make test env=production
-#  include:
-#    - stage: build and push docker image
-#      script:
-#      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-#      - make build
-#      - make image
-#      - make push
-#
-#    - stage: deploy production
-#      script:
-#      - make deploy server=instance.evarun.ru password=$USER_PASSWORD
-#
-#    - stage: test production
-#      script:
-#        - make test env=production
 
 #    - stage: test openapi3
 #      script:
