@@ -33,7 +33,7 @@ suites:
         modules:
             enabled:
                 - REST:
-                    url: http://auth.evarun.ru/api/v1
+                    url: http://gateway.production.evarun.ru/api/v1/auth
                     depends: PhpBrowser
 
 paths:
