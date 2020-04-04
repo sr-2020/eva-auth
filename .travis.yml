@@ -8,22 +8,49 @@ php:
   - '7.2'
 python:
   - '3.6'
+env:
+  global:
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 jobs:
   include:
     - stage: build and push docker image
       script:
-      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - make build
-      - make image
-      - make push
-
+        - export IMAGE_TAG=$(echo "$TRAVIS_COMMIT" | head -c7)
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - make build
+        - make image tag=$IMAGE_TAG
+        - make push
     - stage: deploy production
+      install:
+        - export IMAGE_TAG=$(echo "$TRAVIS_COMMIT" | head -c7)
+        - echo "$SERVICE_ACCOUNT_KEY" | base64 --decode > ${HOME}/service-account-key.json
+        - curl https://sdk.cloud.google.com | bash > /dev/null
+        - source $HOME/google-cloud-sdk/path.bash.inc
+        - gcloud components install kubectl
+        - gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=${HOME}/service-account-key.json
+        - gcloud container clusters get-credentials prod --project $PROJECT --zone $ZONE
+        - kubectl config set-context --current --namespace=production
       script:
-      - make deploy server=instance.evarun.ru password=$USER_PASSWORD
-
+        - kubectl set image deployment/auth auth=sr2020/eva-auth:$IMAGE_TAG --record
+        - kubectl rollout status deployment/auth
     - stage: test production
       script:
         - make test env=production
+#  include:
+#    - stage: build and push docker image
+#      script:
+#      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+#      - make build
+#      - make image
+#      - make push
+#
+#    - stage: deploy production
+#      script:
+#      - make deploy server=instance.evarun.ru password=$USER_PASSWORD
+#
+#    - stage: test production
+#      script:
+#        - make test env=production
 
 #    - stage: test openapi3
 #      script:
@@ -31,17 +58,17 @@ jobs:
 #        - schemathesis --version
 #        - schemathesis run -c not_a_server_error -c status_code_conformance -c content_type_conformance -c response_schema_conformance http://auth.evarun.ru/docs
 
-addons:
-  sonarcloud:
-    organization: gurkalov-github
-    token:
-      secure: "$SONAR_TOKEN"
-  ssh_known_hosts:
-  - instance.evarun.ru
-  apt:
-    packages:
-    - sshpass
-    - sox
-notifications:
-  slack:
-    secure: "Vn6l6GrvKvdLtX0w1YtJGvtX2fROP3jFzJrJClXiRu9IpkjtYgUVmyN91QUZkFIkq7aWK6NH8pghVS/7F/v+9EMtJmjlTQ4sOAYp1uMrPWVIboGtGkDtBNqbhgjhC4Sj+4dtYn4LlMKgTVUlkCPVj0OMj/Vhiht/FUjt/EdYvIG4Uzo3EvVrxUqvcf4rpI9UuxeT9sO8XwrsQ6Zij0jiY0B0CGOSU8JZ1EpAqvhS6gZQ8Sji8wA3fInADxytu2CFJr9Ah/3Y2MDAHsYg+rieNycVEI9BIYKX/Vm5fKMwbJ8Hu3e4idxgkSa3IIBKBEOMotsiwVAJ2cE15EzYC9hwBdO+cuq4a2m9R9mwoBqAKDgs2ocvZZ2f/jaMMhzQvNLXe7HSvkO7Gy5i41Kep26onK5y/SQfm1uZuMwvt8RolN6gQ9lWSj5MqEdg9wDtWQdj7QYX9y3sJ7d9oUO0TIBdkzoVJsGuQ3vtVvwUxQqI/DMxeRP9m2CzPaX/esV6pZpG3I/iNRphwFLVqtfP8iTlKUcG5sINKjQiY9oARSOy44B1t+I8zNiR0nLhqlWcky1lqqurEJAuECYoG0HMrdVDPhk0ZVfYHAKAguwg3lCSkogyvV0o/gzPMVOQ5tca5Ml87tlYLEV5hAxAs+6mI6QiaM95QnKR3c3cfQlkjKdeE6o="
+#addons:
+#  sonarcloud:
+#    organization: gurkalov-github
+#    token:
+#      secure: "$SONAR_TOKEN"
+#  ssh_known_hosts:
+#  - instance.evarun.ru
+#  apt:
+#    packages:
+#    - sshpass
+#    - sox
+#notifications:
+#  slack:
+#    secure: "Vn6l6GrvKvdLtX0w1YtJGvtX2fROP3jFzJrJClXiRu9IpkjtYgUVmyN91QUZkFIkq7aWK6NH8pghVS/7F/v+9EMtJmjlTQ4sOAYp1uMrPWVIboGtGkDtBNqbhgjhC4Sj+4dtYn4LlMKgTVUlkCPVj0OMj/Vhiht/FUjt/EdYvIG4Uzo3EvVrxUqvcf4rpI9UuxeT9sO8XwrsQ6Zij0jiY0B0CGOSU8JZ1EpAqvhS6gZQ8Sji8wA3fInADxytu2CFJr9Ah/3Y2MDAHsYg+rieNycVEI9BIYKX/Vm5fKMwbJ8Hu3e4idxgkSa3IIBKBEOMotsiwVAJ2cE15EzYC9hwBdO+cuq4a2m9R9mwoBqAKDgs2ocvZZ2f/jaMMhzQvNLXe7HSvkO7Gy5i41Kep26onK5y/SQfm1uZuMwvt8RolN6gQ9lWSj5MqEdg9wDtWQdj7QYX9y3sJ7d9oUO0TIBdkzoVJsGuQ3vtVvwUxQqI/DMxeRP9m2CzPaX/esV6pZpG3I/iNRphwFLVqtfP8iTlKUcG5sINKjQiY9oARSOy44B1t+I8zNiR0nLhqlWcky1lqqurEJAuECYoG0HMrdVDPhk0ZVfYHAKAguwg3lCSkogyvV0o/gzPMVOQ5tca5Ml87tlYLEV5hAxAs+6mI6QiaM95QnKR3c3cfQlkjKdeE6o="
