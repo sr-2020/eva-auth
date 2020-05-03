@@ -93,6 +93,13 @@ class ProfileController extends Controller
         $user = $request->user();
 
         $model= User::findOrFail($user->id);
+        $model->fillable([
+            'name',
+            'email',
+            'password',
+            'status',
+            'options',
+        ]);
         $model->fill($request->all());
         $model->save();
         return new JsonResponse($model, JsonResponse::HTTP_OK);

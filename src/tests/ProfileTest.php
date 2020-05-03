@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Illuminate\Http\JsonResponse;
 
@@ -87,6 +88,31 @@ class ProfileTest extends TestCase
         ])
             ->seeStatusCode(JsonResponse::HTTP_OK)
             ->seeJson($user->toArray());
+    }
+
+    /**
+     * A basic test create.
+     *
+     * @return void
+     */
+    public function testUpdateProfileTryUpdateSensitiveSuccess()
+    {
+        $user = factory(App\User::class)->make();
+        $user->save();
+
+        $data = [
+            'admin' => true,
+            'api_key' => 'UnFQb2RqWVF4SXdrMWQ1NVNRNUQySURl',
+        ];
+
+        $this->json('PUT', '/api/v1/profile', $data, [
+            'Authorization' => $user->api_key
+        ])
+            ->seeStatusCode(JsonResponse::HTTP_OK)
+            ->seeJson($user->toArray())
+            ->seeJsonContains([
+                'admin' => false,
+            ]);
     }
 
     /**
