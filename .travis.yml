@@ -3,11 +3,9 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-language: python
-php:
-  - '7.2'
-python:
-  - '3.6'
+language: go
+go:
+  - '1.13'
 env:
   global:
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
@@ -36,6 +34,10 @@ jobs:
     - stage: test production
       script:
         - make test env=production
+    - stage: gateway integration test
+      script:
+        - git clone https://github.com/sr-2020/eva-gateway
+        - cd eva-gateway/src/tests && go test -v ./...
 
 #    - stage: test openapi3
 #      script:
