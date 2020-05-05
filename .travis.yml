@@ -35,16 +35,8 @@ jobs:
       script:
         - make test env=production
     - stage: gateway integration test
-      install:
-        - echo "$SERVICE_ACCOUNT_KEY" | base64 --decode > ${HOME}/service-account-key.json
-        - curl https://sdk.cloud.google.com | bash > /dev/null
-        - source $HOME/google-cloud-sdk/path.bash.inc
-        - gcloud components install kubectl
-        - gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=${HOME}/service-account-key.json
-        - gcloud container clusters get-credentials prod --project $PROJECT --zone $ZONE
-        - kubectl config set-context --current --namespace=production
       script:
-        - kubectl rollout restart deployment/convey
+        - curl https://convey.evarun.ru/execute
 
 #    - stage: test openapi3
 #      script:
