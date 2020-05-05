@@ -36,6 +36,10 @@ class AuthServiceProvider extends ServiceProvider
                 $apiKey = empty($auth[1]) ? $auth[0] : $auth[1];
                 return User::where('api_key', $apiKey)->first();
             }
+            if ($request->header('X-User-Id')) {
+                $userId = (int)$request->header('X-User-Id')[0];
+                return User::find($userId);
+            }
         });
     }
 }

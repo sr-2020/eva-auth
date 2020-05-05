@@ -45,13 +45,13 @@ class ProfileTest extends TestCase
      *
      * @return void
      */
-    public function testProfileBearerAuthorizationSuccess()
+    public function testProfileAuthorizationByXUserIdSuccess()
     {
         $user = factory(App\User::class)->make();
         $user->save();
 
-        $this->json('GET', '/api/v1/profile', $user->toArray(), [
-            'Authorization' => 'Bearer ' . $user->api_key
+        $this->json('GET', '/api/v1/profile', [], [
+            'X-User-Id' => $user->id
         ])
             ->seeStatusCode(JsonResponse::HTTP_OK)
             ->seeJsonEquals($user->toArray());
@@ -69,6 +69,22 @@ class ProfileTest extends TestCase
 
         $this->json('GET', '/api/v1/profile', $user->toArray(), [
             'Authorization' => 'Bearer test'
+        ])
+            ->seeStatusCode(JsonResponse::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * A basic test create.
+     *
+     * @return void
+     */
+    public function testProfileAuthorizationByXUserIdFail()
+    {
+        $user = factory(App\User::class)->make();
+        $user->save();
+
+        $this->json('GET', '/api/v1/profile', [], [
+            'X-User-Id' => ''
         ])
             ->seeStatusCode(JsonResponse::HTTP_UNAUTHORIZED);
     }
