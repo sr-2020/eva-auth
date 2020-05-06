@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -101,7 +102,15 @@ class ProfileController extends Controller
             'options',
         ]);
         $model->fill($request->all());
-        $model->save();
+
+        try {
+            $model->save();
+        } catch (QueryException $e) {
+            return new JsonResponse([
+                'error' => $e->errorInfo[2]
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        }
+
         return new JsonResponse($model, JsonResponse::HTTP_OK);
     }
 }

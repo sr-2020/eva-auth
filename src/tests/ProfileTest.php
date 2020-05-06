@@ -146,4 +146,28 @@ class ProfileTest extends TestCase
         ])
             ->seeStatusCode(JsonResponse::HTTP_UNAUTHORIZED);
     }
+
+    /**
+     * A basic test create.
+     *
+     * @return void
+     */
+    public function testUpdateProfileTryChangeEmailToAlreaseyExistsEmail()
+    {
+        $userFirst = factory(App\User::class)->make();
+        $userFirst->save();
+
+        $userSecond = factory(App\User::class)->make();
+        $userSecond->save();
+
+        $data = [
+            'email' => $userSecond->email,
+        ];
+
+        $this->json('PUT', '/api/v1/profile', $data, [
+            'Authorization' => $userFirst->api_key
+        ])
+            ->seeStatusCode(JsonResponse::HTTP_BAD_REQUEST)
+            ->seeJson(['error' => 'UNIQUE constraint failed: users.email']);
+    }
 }
