@@ -1,0 +1,25 @@
+replicaCount: 1
+
+app:
+  postgres:
+    host: postgres
+    port: 5432
+    db: auth
+    connection: pgsql
+
+image:
+  repository: sr2020/eva-auth
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+
+resources:
+  limits:
+    cpu: 50m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 128Mi

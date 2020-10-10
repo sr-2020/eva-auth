@@ -28,9 +28,10 @@ jobs:
         - gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=${HOME}/service-account-key.json
         - gcloud container clusters get-credentials prod --project $PROJECT --zone $ZONE
         - kubectl config set-context --current --namespace=production
+        - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+        - helm version
       script:
-        - kubectl set image deployment/auth auth=sr2020/eva-auth:$IMAGE_TAG --record
-        - kubectl rollout status deployment/auth
+        - helm upgrade auth helm/auth/ --wait --set image.tag=$IMAGE_TAG
     - stage: test production
       script:
         - make test env=production
